@@ -20,6 +20,15 @@ def edit():
 def delete():
     return render_template("delete.html")
 
+@app.route("/view")
+def view():
+    con = sqlite3.connect("data.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("select * from emp")
+    rows = cur.fetchall()
+    return render_template("view.html",rows = rows)
+
 @app.route("/savedetails", methods=["POST", "GET"])
 def saveDetails():
     if request.method == "POST":
